@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h2 class="text-success">Welcome, {{ username }} 🎉</h2>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger float-end">Logout</a>
+        <hr>
+
+        <div class="row">
+            <!-- Encrypt Text -->
+            <div class="col-md-6">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <h4 class="text-primary">Encrypt Text</h4>
+                        <form method="POST" action="{{ url_for('process') }}">
+                            <input type="hidden" name="action" value="encrypt">
+                            <input type="hidden" name="target" value="text">
+                            <textarea name="plain_text" class="form-control mb-3" rows="3" placeholder="Enter text here"></textarea>
+                            <input type="password" name="key_password" class="form-control mb-3" placeholder="Key Password" required>
+                            <button type="submit" class="btn btn-success w-100">Encrypt</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decrypt Text -->
+            <div class="col-md-6">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <h4 class="text-danger">Decrypt Text</h4>
+                        <form method="POST" action="{{ url_for('process') }}">
+                            <input type="hidden" name="action" value="decrypt">
+                            <input type="hidden" name="target" value="text">
+                            <textarea name="cipher_text" class="form-control mb-3" rows="3" placeholder="Paste encrypted text"></textarea>
+                            <input type="password" name="key_password" class="form-control mb-3" placeholder="Key Password" required>
+                            <button type="submit" class="btn btn-danger w-100">Decrypt</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- File Encryption / Decryption -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <h4 class="text-primary">Encrypt File</h4>
+                        <form method="POST" action="{{ url_for('process') }}" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="encrypt">
+                            <input type="hidden" name="target" value="file">
+                            <input type="file" name="plain_file" class="form-control mb-3" required>
+                            <input type="password" name="key_password" class="form-control mb-3" placeholder="Key Password" required>
+                            <button type="submit" class="btn btn-success w-100">Encrypt File</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <h4 class="text-danger">Decrypt File</h4>
+                        <form method="POST" action="{{ url_for('process') }}" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="decrypt">
+                            <input type="hidden" name="target" value="file">
+                            <input type="file" name="cipher_file" class="form-control mb-3" required>
+                            <input type="password" name="key_password" class="form-control mb-3" placeholder="Key Password" required>
+                            <button type="submit" class="btn btn-danger w-100">Decrypt File</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
